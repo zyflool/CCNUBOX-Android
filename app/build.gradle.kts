@@ -1,5 +1,6 @@
 import com.muxixyz.ccnubox.build.BC.Versions
 import com.muxixyz.ccnubox.build.BC.Deps
+import com.muxixyz.ccnubox.build.BC.Project
 import com.muxixyz.ccnubox.build.implementation
 
 plugins {
@@ -63,9 +64,25 @@ android {
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to arrayOf("*.jar"))))
+
+    implementation(project(Project.featureHome))
+    implementation(project(Project.featureHomeExport))
+    implementation(project(Project.featureLibrary))
+    implementation(project(Project.featureLibraryExport))
+    implementation(project(Project.featureProfile))
+    implementation(project(Project.featureProfileExport))
+
+    implementation(project(Project.featureUIKit))
+    implementation(project(Project.featureIOKit))
+    implementation(project(Project.featureCommon))
+
+    implementation(project(Project.infrastructureIOKit))
+
+
     implementation(Deps.kotlinGroup)
     implementation(Deps.jetpackUIGroup)
     implementation(Deps.networkGroup)
+    implementation(Deps.koinRuntimeGroup)
     implementation(Deps.gson)
     debugImplementation(Deps.stethoOKHttp)
 }

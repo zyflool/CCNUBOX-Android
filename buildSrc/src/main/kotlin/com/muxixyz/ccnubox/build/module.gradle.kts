@@ -1,12 +1,18 @@
+package com.muxixyz.ccnubox.build
+
+import com.android.build.gradle.LibraryExtension
 import com.muxixyz.ccnubox.build.BC.Versions
+import com.muxixyz.ccnubox.build.BC.Deps
 
 plugins {
     id("com.android.library")
     id("kotlin-android")
     id("kotlin-android-extensions")
+    id("kotlin-kapt")
+    id("me.2bab.bro")
 }
 
-android {
+configure<LibraryExtension> {
 
     defaultConfig {
         minSdkVersion(Versions.minSdkVersion)
@@ -43,4 +49,9 @@ android {
         unitTests.isReturnDefaultValues = true
         execution = "ANDROIDX_TEST_ORCHESTRATOR"
     }
+}
+
+dependencies {
+    implementation(Deps.broRuntimeGroup)
+    implementation(Deps.koinRuntimeGroup)
 }

@@ -5,6 +5,24 @@ import org.gradle.api.JavaVersion
 // BuildConfig for Gradle Scripts
 object BC {
 
+    object Project {
+        const val featureHome = ":feature-home"
+        const val featureHomeExport = ":feature-home-export"
+
+        const val featureLibrary = ":feature-library"
+        const val featureLibraryExport = ":feature-library-export"
+
+        const val featureProfile = ":feature-profile"
+        const val featureProfileExport = ":feature-profile-export"
+
+        const val featureIOKit = ":feature-iokit"
+        const val featureUIKit = ":feature-uikit"
+
+        const val featureCommon = ":feature-common"
+
+        const val infrastructureIOKit = ":infras-iokit"
+    }
+
     // How to query versions:
     //
     // - Google Maven Repo: https://maven.google.com/web/index.html
@@ -66,12 +84,14 @@ object BC {
 //            broServiceLocator,
         )
 
-        const val koinCore = "org.koin:koin-core:$${Versions.koinVer}"
-        const val koinCoreExt = "org.koin:koin-core-ext:$${Versions.koinVer}"
+        const val koin = "org.koin:koin-android:$${Versions.koinVer}"
+        const val koinScope = "org.koin:koin-androidx-scope:$${Versions.koinVer}" // use the androidx dep
+        const val koinViewModel = "org.koin:koin-androidx-viewmodel:${Versions.koinVer}" // use the androidx dep
         const val koinTest = "org.koin:koin-test:$${Versions.koinVer}"
         val koinRuntimeGroup = setOf(
-            koinCore,
-            koinCoreExt
+            koin,
+            koinScope,
+            koinViewModel
         )
 
         // Jetpack - UI

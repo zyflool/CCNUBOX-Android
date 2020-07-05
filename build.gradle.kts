@@ -17,6 +17,7 @@ buildscript {
         classpath(kotlin("gradle-plugin", version = project.extra["kotlinVersion"].toString()))
         classpath("com.android.tools.build:gradle:${project.extra["agpVersion"]}")
         classpath("org.koin:koin-gradle-plugin:2.1.6")
+        classpath("me.2bab:bro-gradle-plugin:1.3.6")
     }
 
 }
