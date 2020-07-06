@@ -54,4 +54,9 @@ configure<LibraryExtension> {
 dependencies {
     implementation(Deps.broRuntimeGroup)
     implementation(Deps.koinRuntimeGroup)
+    kapt(Deps.broCompiler)
+}
+
+kapt {
+    useBuildCache = false
 }

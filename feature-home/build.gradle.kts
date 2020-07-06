@@ -9,7 +9,11 @@ plugins {
 dependencies {
     implementation(project(Project.featureHomeExport))
     implementation(project(Project.featureUIKit))
+    implementation(project(Project.featureIOKit))
     implementation(project(Project.infrastructureIOKit))
 
+    implementation(Deps.koinRuntimeGroup)
     implementation(Deps.jetpackUIGroup)
+    implementation(Deps.networkGroup)
+    implementation(Deps.jetpackLifeCycleRuntimeGroup)
 }

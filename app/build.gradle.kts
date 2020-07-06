@@ -2,11 +2,14 @@ import com.muxixyz.ccnubox.build.BC.Versions
 import com.muxixyz.ccnubox.build.BC.Deps
 import com.muxixyz.ccnubox.build.BC.Project
 import com.muxixyz.ccnubox.build.implementation
+import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
 
 plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-android-extensions")
+    id("kotlin-kapt")
+    id("me.2bab.bro")
 }
 
 android {
@@ -77,12 +80,18 @@ dependencies {
     implementation(project(Project.featureCommon))
 
     implementation(project(Project.infrastructureIOKit))
-
+    kapt(Deps.broCompiler)
 
     implementation(Deps.kotlinGroup)
+
+    implementation(Deps.broRuntimeGroup)
+    implementation(Deps.koinRuntimeGroup)
     implementation(Deps.jetpackUIGroup)
     implementation(Deps.networkGroup)
-    implementation(Deps.koinRuntimeGroup)
     implementation(Deps.gson)
     debugImplementation(Deps.stethoOKHttp)
+}
+
+kapt {
+    useBuildCache = false
 }

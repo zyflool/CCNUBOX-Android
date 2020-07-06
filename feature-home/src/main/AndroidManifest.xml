@@ -3,7 +3,8 @@
     package="com.muxixyz.ccnubox.home">
 
     <application>
-
+        <activity android:name=".ui.HomeActivity">
+        </activity>
     </application>
 
 </manifest>

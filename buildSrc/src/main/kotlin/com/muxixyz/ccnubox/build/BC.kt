@@ -106,8 +106,8 @@ object BC {
 
         // Jetpack - Lifecycle
         const val jetpackLifeCycleRuntime = "androidx.lifecycle:lifecycle-runtime:${Versions.jetpackLifecycleVer}"
-        const val jetpackLifeCycleExt = "androidx.lifecycle:lifecycle-extension:${Versions.jetpackLifecycleVer}"
-        const val jetpackLifeCycleViewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-kts:${Versions.jetpackLifecycleVer}"
+        const val jetpackLifeCycleExt = "androidx.lifecycle:lifecycle-extensions:${Versions.jetpackLifecycleVer}"
+        const val jetpackLifeCycleViewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.jetpackLifecycleVer}"
         const val jetpackLifeCycleCompiler = "androidx.lifecycle:lifecycle-compiler:${Versions.jetpackLifecycleVer}"
         val jetpackLifeCycleRuntimeGroup = setOf(
             jetpackLifeCycleRuntime,
