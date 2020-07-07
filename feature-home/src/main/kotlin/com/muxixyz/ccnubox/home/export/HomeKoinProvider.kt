@@ -19,4 +19,6 @@ val homeKoinProvider: Module = module {
 
     viewModel { HomeViewModel(get()) }
 
+    single<IHomeExportApi> { HomeApi(get()) }
+
 }
