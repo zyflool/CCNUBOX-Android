@@ -22,6 +22,12 @@ android {
         versionCode = 3 * 10000 + 0 * 100 + 0
         versionName = "3.0.0.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
     }
 
     buildTypes {
@@ -74,6 +80,14 @@ dependencies {
     implementation(project(Project.featureLibraryExport))
     implementation(project(Project.featureProfile))
     implementation(project(Project.featureProfileExport))
+    implementation(project(Project.featureSchedule))
+    implementation(project(Project.featureScheduleExport))
+    implementation(project(Project.featureTimetable))
+    implementation(project(Project.featureTimetableExport))
+    implementation(project(Project.featureCCNUToolbox))
+    implementation(project(Project.featureCCNUToolboxExport))
+    implementation(project(Project.featureUniToolbox))
+    implementation(project(Project.featureUniToolboxExport))
 
     implementation(project(Project.featureUIKit))
     implementation(project(Project.featureIOKit))

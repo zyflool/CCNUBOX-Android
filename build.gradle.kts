@@ -2,6 +2,7 @@ buildscript {
 
     project.extra["kotlinVersion"] = "1.3.72"
     project.extra["agpVersion"] = "4.0.0"
+    project.extra["arouterRegisterVersion"]= "1.0.2"
 
     repositories {
         google()
@@ -18,6 +19,7 @@ buildscript {
         classpath("com.android.tools.build:gradle:${project.extra["agpVersion"]}")
         classpath("org.koin:koin-gradle-plugin:2.1.6")
         classpath("me.2bab:bro-gradle-plugin:1.3.6")
+        classpath("com.alibaba:arouter-register:${project.extra["arouterRegisterVersion"]}")
     }
 
 }
