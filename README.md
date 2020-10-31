@@ -11,3 +11,9 @@ So far we haven't added any hook tool, but follow the regex below:
 ```
 (chore|feat|docs|fix|refactor|style|test|hack|release)(:)( )(.{0,80})
 ```
+
+## Coding Standards
+references: [Blankj/AndroidStandardDeveloper](https://github.com/Blankj/AndroidStandardDevelop)
+
+## gitflow Standards
+[standard document](https://zyflool.github.io/2020/10/31/gitflow%E8%A7%84%E8%8C%83%E6%96%87%E6%A1%A3/)
