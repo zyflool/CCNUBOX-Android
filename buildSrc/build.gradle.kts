@@ -16,5 +16,5 @@ dependencies {
     implementation(kotlin("gradle-plugin"))
     // Please sync it with the one in root build.gradle.kts
     implementation("com.android.tools.build:gradle:4.0.0")
-    implementation("me.2bab:bro-gradle-plugin:1.3.6")
+//    implementation("me.2bab:bro-gradle-plugin:1.3.6")
 }

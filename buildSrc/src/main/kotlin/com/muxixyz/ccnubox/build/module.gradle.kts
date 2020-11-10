@@ -9,7 +9,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-android-extensions")
     id("kotlin-kapt")
-    id("me.2bab.bro")
+//    id("me.2bab.bro")
 }
 
 configure<LibraryExtension> {
@@ -21,6 +21,12 @@ configure<LibraryExtension> {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+//        kapt {
+//            arguments {
+//                arg("AROUTER_MODULE_NAME", project.getName())
+//            }
+//        }
     }
 
     buildTypes {
@@ -52,9 +58,11 @@ configure<LibraryExtension> {
 }
 
 dependencies {
-    implementation(Deps.broRuntimeGroup)
+//    implementation(Deps.broRuntimeGroup)
     implementation(Deps.koinRuntimeGroup)
-    kapt(Deps.broCompiler)
+//    kapt(Deps.broCompiler)
+//    implementation(Deps.arouterApi)
+//    kapt(Deps.arouterCompiler)
 }
 
 kapt {

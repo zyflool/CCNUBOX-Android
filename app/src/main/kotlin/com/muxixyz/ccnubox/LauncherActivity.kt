@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import com.muxixyz.ccnubox.home.ui.HomeActivity
-import me.xx2bab.bro.annotations.BroActivity
-import me.xx2bab.bro.core.Bro
+//import me.xx2bab.bro.annotations.BroActivity
+//import me.xx2bab.bro.core.Bro
 import net.muxi.huashiapp.R
 
 class LauncherActivity : AppCompatActivity() {

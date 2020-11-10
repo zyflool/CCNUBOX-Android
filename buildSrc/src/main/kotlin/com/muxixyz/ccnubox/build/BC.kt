@@ -45,6 +45,11 @@ object BC {
         const val broVer = "1.3.6"
         const val koinVer = "2.1.6"
 
+        // ARouter
+        const val arouterAPIVer = "1.5.1"
+        const val arouterCompilerVer = "1.5.1"
+        const val arouterRegisterVer = "1.0.2"
+
         // Jetpack
         const val jectpackAppCompatVer = "1.2.0-rc01"
         const val jectpackMaterialVer = "1.2.0-beta01"
@@ -74,15 +79,18 @@ object BC {
         )
 
         // Modulization / DI
-        const val broCore = "me.2bab:bro:${Versions.broVer}"
-        const val broNav = "me.2bab:bro-nav:${Versions.broVer}"
-        const val broServiceLocator = "me.2bab:bro-service-locator:${Versions.broVer}"
-        const val broCompiler = "me.2bab:bro-compiler:${Versions.broVer}"
-        val broRuntimeGroup = setOf(
-            broCore
-//            broNav,
-//            broServiceLocator,
-        )
+//        const val broCore = "me.2bab:bro:${Versions.broVer}"
+//        const val broNav = "me.2bab:bro-nav:${Versions.broVer}"
+//        const val broServiceLocator = "me.2bab:bro-service-locator:${Versions.broVer}"
+//        const val broCompiler = "me.2bab:bro-compiler:${Versions.broVer}"
+//        val broRuntimeGroup = setOf(
+//            broCore
+////            broNav,
+////            broServiceLocator,
+//        )
+        const val arouterApi = "com.alibaba:arouter-api:${Versions.arouterAPIVer}"
+        const val arouterCompiler = "com.alibaba:arouter-compiler:${Versions.arouterCompilerVer}"
+        const val arouterRegister = "com.alibaba:arouter-register:${Versions.arouterRegisterVer}"
 
         const val koin = "org.koin:koin-android:$${Versions.koinVer}"
         const val koinScope = "org.koin:koin-androidx-scope:$${Versions.koinVer}" // use the androidx dep

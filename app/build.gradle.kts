@@ -9,7 +9,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-android-extensions")
     id("kotlin-kapt")
-    id("me.2bab.bro")
+//    id("me.2bab.bro")
 }
 
 android {
@@ -22,6 +22,12 @@ android {
         versionCode = 3 * 10000 + 0 * 100 + 0
         versionName = "3.0.0.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
     }
 
     buildTypes {
@@ -80,11 +86,13 @@ dependencies {
     implementation(project(Project.featureCommon))
 
     implementation(project(Project.infrastructureIOKit))
-    kapt(Deps.broCompiler)
+//    kapt(Deps.broCompiler)
+    implementation(Deps.arouterApi)
+    kapt(Deps.arouterCompiler)
 
     implementation(Deps.kotlinGroup)
 
-    implementation(Deps.broRuntimeGroup)
+//    implementation(Deps.broRuntimeGroup)
     implementation(Deps.koinRuntimeGroup)
     implementation(Deps.jetpackUIGroup)
     implementation(Deps.networkGroup)

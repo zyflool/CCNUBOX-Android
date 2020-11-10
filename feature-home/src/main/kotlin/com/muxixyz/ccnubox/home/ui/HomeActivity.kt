@@ -6,12 +6,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.muxixyz.ccnubox.home.R
 import com.muxixyz.ccnubox.home.databinding.HomeActivityBinding
-import com.muxixyz.ccnubox.home.export.HomeModule
 import com.muxixyz.ccnubox.uikit.base.BaseActivity
-import me.xx2bab.bro.annotations.BroActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@BroActivity("ccnubox://home", HomeModule::class)
+
 class HomeActivity: BaseActivity() {
 
     val model : HomeViewModel by viewModel()
