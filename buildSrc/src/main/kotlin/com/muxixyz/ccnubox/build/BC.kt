@@ -12,6 +12,18 @@ object BC {
         const val featureLibrary = ":feature-library"
         const val featureLibraryExport = ":feature-library-export"
 
+        const val featureSchedule = ":feature-schedule"
+        const val featureScheduleExport = ":feature-schedule-export"
+
+        const val featureTimetable = ":feature-timetable"
+        const val featureTimetableExport = ":feature-timetable-export"
+
+        const val featureCCNUToolbox = ":feature-ccnutoolbox"
+        const val featureCCNUToolboxExport = ":feature-ccnutoolbox-export"
+
+        const val featureUniToolbox = ":feature-unitoolbox"
+        const val featureUniToolboxExport = ":feature-unitoolbox"
+
         const val featureProfile = ":feature-profile"
         const val featureProfileExport = ":feature-profile-export"
 
@@ -44,6 +56,7 @@ object BC {
         // Modulization / DI
         const val broVer = "1.3.6"
         const val koinVer = "2.1.6"
+        const val arouterVer = "1.5.1"
 
         // ARouter
         const val arouterAPIVer = "1.5.1"
@@ -63,15 +76,16 @@ object BC {
         // Other 3rd libs
         const val retrofitVer = "2.9.0"
         const val okhttpVer = "4.7.2"
-
     }
 
     object Deps {
 
         // Kotlin
         const val kotlinStd = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.ktVer}"
-        const val kotlinCoroutineCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.ktCoroutineVer}"
-        const val kotlinCoroutineAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.ktCoroutineVer}"
+        const val kotlinCoroutineCore =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.ktCoroutineVer}"
+        const val kotlinCoroutineAndroid =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.ktCoroutineVer}"
         val kotlinGroup = setOf(
             kotlinStd,
             kotlinCoroutineCore,
@@ -93,8 +107,10 @@ object BC {
         const val arouterRegister = "com.alibaba:arouter-register:${Versions.arouterRegisterVer}"
 
         const val koin = "org.koin:koin-android:$${Versions.koinVer}"
-        const val koinScope = "org.koin:koin-androidx-scope:$${Versions.koinVer}" // use the androidx dep
-        const val koinViewModel = "org.koin:koin-androidx-viewmodel:${Versions.koinVer}" // use the androidx dep
+        const val koinScope =
+            "org.koin:koin-androidx-scope:$${Versions.koinVer}" // use the androidx dep
+        const val koinViewModel =
+            "org.koin:koin-androidx-viewmodel:${Versions.koinVer}" // use the androidx dep
         const val koinTest = "org.koin:koin-test:$${Versions.koinVer}"
         val koinRuntimeGroup = setOf(
             koin,
@@ -104,7 +120,8 @@ object BC {
 
         // Jetpack - UI
         const val jetpackAppCompat = "androidx.appcompat:appcompat:${Versions.jectpackAppCompatVer}"
-        const val jetpackMaterial = "com.google.android.material:material:${Versions.jectpackMaterialVer}"
+        const val jetpackMaterial =
+            "com.google.android.material:material:${Versions.jectpackMaterialVer}"
         const val jetpackConstraintLayout = "androidx.constraintlayout:constraintlayout:1.1.3"
         val jetpackUIGroup = setOf(
             jetpackAppCompat,
@@ -113,10 +130,14 @@ object BC {
         )
 
         // Jetpack - Lifecycle
-        const val jetpackLifeCycleRuntime = "androidx.lifecycle:lifecycle-runtime:${Versions.jetpackLifecycleVer}"
-        const val jetpackLifeCycleExt = "androidx.lifecycle:lifecycle-extensions:${Versions.jetpackLifecycleVer}"
-        const val jetpackLifeCycleViewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.jetpackLifecycleVer}"
-        const val jetpackLifeCycleCompiler = "androidx.lifecycle:lifecycle-compiler:${Versions.jetpackLifecycleVer}"
+        const val jetpackLifeCycleRuntime =
+            "androidx.lifecycle:lifecycle-runtime:${Versions.jetpackLifecycleVer}"
+        const val jetpackLifeCycleExt =
+            "androidx.lifecycle:lifecycle-extensions:${Versions.jetpackLifecycleVer}"
+        const val jetpackLifeCycleViewModelKtx =
+            "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.jetpackLifecycleVer}"
+        const val jetpackLifeCycleCompiler =
+            "androidx.lifecycle:lifecycle-compiler:${Versions.jetpackLifecycleVer}"
         val jetpackLifeCycleRuntimeGroup = setOf(
             jetpackLifeCycleRuntime,
             jetpackLifeCycleExt,
@@ -134,7 +155,8 @@ object BC {
 
         // Other 3rd libs
         const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofitVer}"
-        const val retrofitGsonAdapter = "com.squareup.retrofit2:converter-gson:${Versions.retrofitVer}"
+        const val retrofitGsonAdapter =
+            "com.squareup.retrofit2:converter-gson:${Versions.retrofitVer}"
         const val okHttp = "com.squareup.okhttp3:okhttp:${Versions.okhttpVer}"
         const val okHttpLogger = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttpVer}"
         val networkGroup = setOf(
@@ -150,5 +172,4 @@ object BC {
         // Test
 
     }
-
 }
