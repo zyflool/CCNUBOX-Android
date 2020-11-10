@@ -9,7 +9,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-android-extensions")
     id("kotlin-kapt")
-    id("me.2bab.bro")
+//    id("me.2bab.bro")
 }
 
 android {
@@ -94,11 +94,13 @@ dependencies {
     implementation(project(Project.featureCommon))
 
     implementation(project(Project.infrastructureIOKit))
-    kapt(Deps.broCompiler)
+//    kapt(Deps.broCompiler)
+    implementation(Deps.arouterApi)
+    kapt(Deps.arouterCompiler)
 
     implementation(Deps.kotlinGroup)
 
-    implementation(Deps.broRuntimeGroup)
+//    implementation(Deps.broRuntimeGroup)
     implementation(Deps.koinRuntimeGroup)
     implementation(Deps.jetpackUIGroup)
     implementation(Deps.networkGroup)
