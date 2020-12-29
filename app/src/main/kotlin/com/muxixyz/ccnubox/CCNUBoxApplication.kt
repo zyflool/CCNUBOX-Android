@@ -3,85 +3,40 @@ package com.muxixyz.ccnubox
 import android.app.Application
 import android.content.Context
 import android.content.Intent
+import com.alibaba.android.arouter.launcher.ARouter
 import com.muxixyz.ccnubox.home.export.homeKoinProvider
 import com.muxixyz.ccnubox.iokit.export.ioKitKoinProvider
+import com.muxixyz.ccnubox.schedule.export.scheduleKoinProvider
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidFileProperties
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 
 
-class CCNUBoxApplication: Application() {
+class CCNUBoxApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
 
-//        initBro()
+        initARouter()
         initKoin()
 
     }
 
     private fun initKoin() {
-        startKoin{
+        startKoin {
             androidLogger()
             androidContext(this@CCNUBoxApplication)
             androidFileProperties()
-            modules(homeKoinProvider,
-                ioKitKoinProvider)
+            modules(
+                homeKoinProvider,
+                ioKitKoinProvider,
+                scheduleKoinProvider
+            )
         }
     }
-//    private fun initBro() {
-//        val interceptor: IBroInterceptor = object : IBroInterceptor {
-//            override fun beforeFindActivity(
-//                context: Context,
-//                target: String,
-//                intent: Intent,
-//                properties: BroProperties?
-//            ): Boolean {
-//                return false
-//            }
-//
-//            override fun beforeGetApi(
-//                context: Context,
-//                target: String,
-//                api: IBroApi,
-//                properties: BroProperties?
-//            ): Boolean {
-//                return false
-//            }
-//
-//            override fun beforeGetModule(
-//                context: Context,
-//                target: String,
-//                module: IBroModule,
-//                properties: BroProperties?
-//            ): Boolean {
-//                return false
-//            }
-//
-//            override fun beforeStartActivity(
-//                context: Context,
-//                target: String,
-//                intent: Intent,
-//                properties: BroProperties?
-//            ): Boolean {
-//                return false
-//            }
-//
-//        }
-//        val monitor: IBroMonitor = object : IBroMonitor {
-//            override fun onModuleException(errorCode: Int) {}
-//            override fun onActivityRudderException(errorCode: Int, builder: Builder) {
-//
-//            }
-//
-//            override fun onApiException(errorCode: Int) {}
-//        }
-//        val broBuilder = BroBuilder()
-////            .setDefaultActivity(SampleDefaultActivity::class.java)
-//            .setLogEnable(true)
-//            .setMonitor(monitor)
-//            .setInterceptor(interceptor)
-//        Bro.initialize(this, broBuilder)
-//    }
+
+    private fun initARouter() {
+        ARouter.init(this@CCNUBoxApplication)
+    }
 }
