@@ -23,4 +23,5 @@ dependencies {
     implementation(Deps.jetpackUIGroup)
     implementation(Deps.networkGroup)
     implementation(Deps.jetpackLifeCycleRuntimeGroup)
+    implementation(Deps.roomRuntimeGroup)
 }
