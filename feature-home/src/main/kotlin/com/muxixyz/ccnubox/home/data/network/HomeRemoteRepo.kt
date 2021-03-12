@@ -4,11 +4,8 @@ import com.muxixyz.android.iokit.Result
 import com.muxixyz.ccnubox.home.data.HomeDataSource
 import com.muxixyz.ccnubox.home.data.domain.Todo
 import com.muxixyz.ccnubox.iokit.network.RetrofitClients
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
-import java.lang.Exception
-import javax.sql.DataSource
+import java.util.*
 
 class HomeRemoteRepo(retrofitClients: RetrofitClients) : HomeDataSource {
 
@@ -24,7 +21,7 @@ class HomeRemoteRepo(retrofitClients: RetrofitClients) : HomeDataSource {
     }
 
     override suspend fun getTodoById(id: String): Result<Todo> {
-        return Result.Success(Todo())
+        return Result.Success(Todo("","",false, Date(), Date(), 0 , false, 0, 0 ,Date(), Date(), ""))
     }
 
     override suspend fun deleteTodo(id: String) {

@@ -24,4 +24,5 @@ dependencies {
     implementation(Deps.networkGroup)
     implementation(Deps.jetpackLifeCycleRuntimeGroup)
     implementation(Deps.roomRuntimeGroup)
+    kapt(Deps.jetpackRoomCompiler)
 }
