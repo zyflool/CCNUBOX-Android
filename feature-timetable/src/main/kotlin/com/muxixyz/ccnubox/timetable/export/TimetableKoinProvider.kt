@@ -1,10 +1,9 @@
 package com.muxixyz.ccnubox.timetable.export
 
-import android.app.Application
 import androidx.room.Room
-import com.muxixyz.ccnubox.timetable.data.database.CourseDao
 import com.muxixyz.ccnubox.timetable.data.database.CourseDatabase
 import com.muxixyz.ccnubox.timetable.data.database.TimetableLocalRepo
+import com.muxixyz.ccnubox.timetable.data.database.TimetableRecordDatabase
 import com.muxixyz.ccnubox.timetable.data.network.TimetableRemoteRepo
 import com.muxixyz.ccnubox.timetable.data.repository.TimetableRepository
 import com.muxixyz.ccnubox.timetable.ui.TimetableViewModel
@@ -24,19 +23,27 @@ val timetableKoinProvider: Module = module {
     single { TimetableRemoteRepo(get()) }
 
     // database
-    fun provideCourseDatabase(application: Application) :CourseDatabase {
-        return Room.databaseBuilder(application, CourseDatabase::class.java, "course").build()
+    single {
+        Room.databaseBuilder(
+            androidApplication(),
+            CourseDatabase::class.java,
+            "course"
+        )
+            .build()
     }
+    single { get<CourseDatabase>().courseDao() }
 
-    fun provideCourseDao(database: CourseDatabase): CourseDao {
-        return database.courseDao()
+    single {
+        Room.databaseBuilder(
+            androidApplication(),
+            TimetableRecordDatabase::class.java,
+            "timetableRecord"
+        )
+            .build()
     }
+    single { get<TimetableRecordDatabase>().timetableRecordDao() }
 
-    single { provideCourseDao(get()) }
-
-    single { provideCourseDatabase(androidApplication()) }
-
-    single { TimetableLocalRepo(androidApplication(), get()) }
+    single { TimetableLocalRepo(androidApplication(), get(), get()) }
 
     single { TimetableRepository(get(), get()) }
 }

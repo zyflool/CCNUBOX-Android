@@ -1,24 +1,13 @@
 package com.muxixyz.ccnubox.timetable.data.network
 
 import com.muxixyz.ccnubox.timetable.data.database.DatabaseCourse
+import com.muxixyz.ccnubox.timetable.data.database.DatabaseTimetableRecord
 import com.muxixyz.ccnubox.timetable.data.domain.Course
+import com.muxixyz.ccnubox.timetable.data.domain.TimetableRecord
 
-data class NetworkCourseContainer(val courses: List<NetworkCourse>) {
-    fun asDatabaseModel(): List<DatabaseCourse> {
-        return courses.map{
-            DatabaseCourse(
-                id = it.id,
-                name = it.name,
-                place = it.place,
-                teacher = it.teacher,
-                dayOfWeek = it.dayOfWeek,
-                courseTime = it.courseTime,
-                weeks = it.weeks,
-                courseTableId = it.courseTableId)
-        }
-    }
-}
-
+/**
+ * course
+ */
 data class NetworkCourse(
     var id: String,
     var name: String,
@@ -30,11 +19,23 @@ data class NetworkCourse(
     var courseTableId: String // 课表 id
 )
 
-/**
- * Convert Network results to database objects
- */
-fun NetworkCourseContainer.asDomainModel(): List<Course> {
-    return courses.map {
+fun List<NetworkCourse>.asCourseDatabaseModel(): List<DatabaseCourse> {
+    return map {
+        DatabaseCourse(
+            id = it.id,
+            name = it.name,
+            place = it.place,
+            teacher = it.teacher,
+            dayOfWeek = it.dayOfWeek,
+            courseTime = it.courseTime,
+            weeks = it.weeks,
+            courseTableId = it.courseTableId
+        )
+    }
+}
+
+fun List<NetworkCourse>.asCourseDomainModel(): List<Course> {
+    return map {
         Course(
             id = it.id,
             name = it.name,
@@ -43,6 +44,49 @@ fun NetworkCourseContainer.asDomainModel(): List<Course> {
             dayOfWeek = it.dayOfWeek,
             courseTime = it.courseTime,
             weeks = it.weeks,
-            courseTableId = it.courseTableId)
+            courseTableId = it.courseTableId
+        )
     }
 }
+
+/**
+ * timetable record
+ */
+data class NetworkTimetableRecord(
+    var id: String,
+    var name: String,
+    var sequence: Int,  // 节次
+    var startHour: Int,
+    var startMinute: Int,
+    var endHour: Int,
+    var endMinute: Int,
+    var timetableId: String // 所属的作息时间表 id
+)
+
+fun List<NetworkTimetableRecord>.asTimetableRecordDomainModel(): List<TimetableRecord> =
+    map {
+        TimetableRecord(
+            id = it.id,
+            name = it.name,
+            sequence = it.sequence,
+            startHour = it.startHour,
+            startMinute = it.startMinute,
+            endHour = it.endHour,
+            endMinute = it.endMinute,
+            timetableId = it.timetableId
+        )
+    }
+
+fun List<NetworkTimetableRecord>.asTimetableRecordDatabaseModel(): List<DatabaseTimetableRecord> =
+    map {
+        DatabaseTimetableRecord(
+            id = it.id,
+            name = it.name,
+            sequence = it.sequence,
+            startHour = it.startHour,
+            startMinute = it.startMinute,
+            endHour = it.endHour,
+            endMinute = it.endMinute,
+            timetableId = it.timetableId
+        )
+    }

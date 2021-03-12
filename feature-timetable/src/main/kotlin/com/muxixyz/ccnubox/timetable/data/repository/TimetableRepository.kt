@@ -3,6 +3,7 @@ package com.muxixyz.ccnubox.timetable.data.repository
 import com.muxixyz.android.iokit.Result
 import com.muxixyz.ccnubox.timetable.data.database.TimetableLocalRepo
 import com.muxixyz.ccnubox.timetable.data.domain.Course
+import com.muxixyz.ccnubox.timetable.data.domain.TimetableRecord
 import com.muxixyz.ccnubox.timetable.data.network.TimetableRemoteRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -12,8 +13,8 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 
 class TimetableRepository(
-    private val courseLocal: TimetableLocalRepo,
-    private val courseRemote: TimetableRemoteRepo
+    private val timetableLocalRepo: TimetableLocalRepo,
+    private val timetableRemoteRepo: TimetableRemoteRepo
 ) {
     private var cachedCourses: ConcurrentMap<String, Course>? = null
 
@@ -29,7 +30,7 @@ class TimetableRepository(
             val newCourses = fetchCoursesFromRemoteOrLocal(forceUpdate)
 
             // Refresh the cache with the new courses
-            (newCourses as? Result.Success)?.let { refreshCache(it.data) }
+            (newCourses as? Result.Success)?.let { refreshCourseCache(it.data) }
 
             cachedCourses?.values?.let { courses ->
                 return@withContext Result.Success(courses.sortedBy { it.id })
@@ -47,11 +48,11 @@ class TimetableRepository(
 
     suspend fun fetchCoursesFromRemoteOrLocal(forceUpdate: Boolean): Result<List<Course>> {
         // Remote first
-        val remoteCourses = courseRemote.getAllCourses()
+        val remoteCourses = timetableRemoteRepo.getAllCourses()
         when (remoteCourses) {
             is Result.Error -> ("Remote data source fetch failed")
             is Result.Success -> {
-                refreshLocalDataSource(remoteCourses.data)
+                refreshCourseLocalDataSource(remoteCourses.data)
                 return remoteCourses
             }
             else -> throw IllegalStateException()
@@ -63,17 +64,17 @@ class TimetableRepository(
         }
 
         // Local if remote fails
-        val localCourses = courseLocal.getAllCourses()
+        val localCourses = timetableLocalRepo.getAllCourses()
         if (localCourses is Result.Success) return localCourses
         return Result.Error(Exception("Error fetching from remote and local"))
     }
 
-    suspend fun refreshLocalDataSource(courses: List<Course>) {
-        courseLocal.deleteAllCourses()
-        courseLocal.addCourses(courses)
+    suspend fun refreshCourseLocalDataSource(courses: List<Course>) {
+        timetableLocalRepo.deleteAllCourses()
+        timetableLocalRepo.addCourses(courses)
     }
 
-    fun refreshCache(courses: List<Course>) {
+    fun refreshCourseCache(courses: List<Course>) {
         cachedCourses?.clear()
         courses.sortedBy { it.id }.forEach {
             cacheAndPerform(it) {}
@@ -102,8 +103,8 @@ class TimetableRepository(
         // Do in memory cache update to keep the app UI up to date
         cacheAndPerform(course) {
             coroutineScope {
-                launch { courseRemote.addCourse(it) }
-                launch { courseLocal.addCourse(it) }
+                launch { timetableRemoteRepo.addCourse(it) }
+                launch { timetableLocalRepo.addCourse(it) }
             }
         }
     }
@@ -111,8 +112,8 @@ class TimetableRepository(
     suspend fun deleteAllCourses() {
         withContext(Dispatchers.IO) {
             coroutineScope {
-                launch { courseRemote.deleteAllCourses() }
-                launch { courseLocal.deleteAllCourses() }
+                launch { timetableRemoteRepo.deleteAllCourses() }
+                launch { timetableLocalRepo.deleteAllCourses() }
             }
         }
         cachedCourses?.clear()
@@ -120,12 +121,137 @@ class TimetableRepository(
 
     suspend fun deleteCourse(courseId: String) {
         coroutineScope {
-            launch { courseRemote.deleteCourse(courseId) }
-            launch { courseLocal.deleteCourse(courseId) }
+            launch { timetableRemoteRepo.deleteCourse(courseId) }
+            launch { timetableLocalRepo.deleteCourse(courseId) }
         }
 
         cachedCourses?.remove(courseId)
     }
 
     private fun getCourseById(id: String) = cachedCourses?.get(id)
+
+
+    private var cachedTimetableRecords: ConcurrentMap<String, TimetableRecord>? = null
+
+    suspend fun getTimetableRecords(forceUpdate: Boolean): Result<List<TimetableRecord>> {
+        return withContext(Dispatchers.IO) {
+            // Respond immediately with cache if available and not dirty
+            if (!forceUpdate) {
+                cachedTimetableRecords?.let { cachedTimetableRecords ->
+                    return@withContext Result.Success(cachedTimetableRecords.values.sortedBy { it.id })
+                }
+            }
+
+            val newTimetableRecords = fetchTimetableRecordsFromRemoteOrLocal(forceUpdate)
+
+            // Refresh the cache with the new timetableRecords
+            (newTimetableRecords as? Result.Success)?.let { refreshTimetableRecordCache(it.data) }
+
+            cachedTimetableRecords?.values?.let { timetableRecords ->
+                return@withContext Result.Success(timetableRecords.sortedBy { it.id })
+            }
+
+            (newTimetableRecords as? Result.Success)?.let {
+                if (it.data.isEmpty()) {
+                    return@withContext Result.Success(it.data)
+                }
+            }
+
+            return@withContext Result.Error(Exception("Illegal state"))
+        }
+    }
+
+    suspend fun fetchTimetableRecordsFromRemoteOrLocal(forceUpdate: Boolean): Result<List<TimetableRecord>> {
+        // Remote first
+        val remoteTimetableRecords = timetableRemoteRepo.getAllTimetableRecords()
+        when (remoteTimetableRecords) {
+            is Result.Error -> ("Remote data source fetch failed")
+            is Result.Success -> {
+                refreshTimetableRecordLocalDataSource(remoteTimetableRecords.data)
+                return remoteTimetableRecords
+            }
+            else -> throw IllegalStateException()
+        }
+
+        // Don't read from local if it's forced
+        if (forceUpdate) {
+            return Result.Error(Exception("Can't force refresh: remote data source is unavailable"))
+        }
+
+        // Local if remote fails
+        val localTimetableRecords = timetableLocalRepo.getAllTimetableRecords()
+        if (localTimetableRecords is Result.Success) return localTimetableRecords
+        return Result.Error(Exception("Error fetching from remote and local"))
+    }
+
+    suspend fun refreshTimetableRecordLocalDataSource(timetableRecords: List<TimetableRecord>) {
+        timetableLocalRepo.deleteAllTimetableRecords()
+        timetableLocalRepo.addTimetableRecords(timetableRecords)
+    }
+
+    fun refreshTimetableRecordCache(timetableRecords: List<TimetableRecord>) {
+        cachedTimetableRecords?.clear()
+        timetableRecords.sortedBy { it.id }.forEach {
+            cacheAndPerform(it) {}
+        }
+    }
+
+    private fun cacheTimetableRecord(timetableRecord: TimetableRecord): TimetableRecord {
+        val cachedTimetableRecord = TimetableRecord(
+            timetableRecord.id,
+            timetableRecord.name,
+            timetableRecord.sequence,
+            timetableRecord.startHour,
+            timetableRecord.startMinute,
+            timetableRecord.endHour,
+            timetableRecord.endMinute,
+            timetableRecord.timetableId
+        )
+        // Create if it doesn't exist.
+        if (cachedTimetableRecords == null) {
+            cachedTimetableRecords = ConcurrentHashMap()
+        }
+        cachedTimetableRecords?.put(cachedTimetableRecord.id, cachedTimetableRecord)
+        return cachedTimetableRecord
+    }
+
+    private inline fun cacheAndPerform(
+        timetableRecord: TimetableRecord,
+        perform: (TimetableRecord) -> Unit
+    ) {
+        val cachedTimetableRecord = cacheTimetableRecord(timetableRecord)
+        perform(cachedTimetableRecord)
+    }
+
+    suspend fun addTimetableRecord(timetableRecord: TimetableRecord) {
+        // Do in memory cache update to keep the app UI up to date
+        cacheAndPerform(timetableRecord) {
+            coroutineScope {
+                launch { timetableRemoteRepo.addTimetableRecord(it) }
+                launch { timetableLocalRepo.addTimetableRecord(it) }
+            }
+        }
+    }
+
+    suspend fun deleteAllTimetableRecords() {
+        withContext(Dispatchers.IO) {
+            coroutineScope {
+                launch { timetableRemoteRepo.deleteAllTimetableRecords() }
+                launch { timetableLocalRepo.deleteAllTimetableRecords() }
+            }
+        }
+        cachedTimetableRecords?.clear()
+    }
+
+    suspend fun deleteTimetableRecord(timetableRecordId: String) {
+        coroutineScope {
+            launch { timetableRemoteRepo.deleteTimetableRecord(timetableRecordId) }
+            launch { timetableLocalRepo.deleteTimetableRecord(timetableRecordId) }
+        }
+
+        cachedTimetableRecords?.remove(timetableRecordId)
+    }
+
+    private fun getTimetableRecordById(id: String) = cachedTimetableRecords?.get(id)
+
 }
