@@ -21,19 +21,6 @@ val homeKoinProvider: Module = module {
     single { HomeRemoteRepo(get()) }
 
     // database
-
-//    fun provideTodoDatabase(application: Application) :TodoDatabase {
-//        return Room.databaseBuilder(application, TodoDatabase::class.java, "todo").build()
-//    }
-//
-//    fun provideTodoDao(database: TodoDatabase): TodoDao {
-//        return database.todoDao()
-//    }
-//
-//    single { provideTodoDao(get()) }
-//
-//    single { provideTodoDatabase(androidApplication()) }
-//
     single {
         Room.databaseBuilder(androidApplication(), TodoDatabase::class.java, "todo")
             .build()
