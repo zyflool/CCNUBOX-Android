@@ -2,14 +2,12 @@ import com.muxixyz.ccnubox.build.BC.Versions
 import com.muxixyz.ccnubox.build.BC.Deps
 import com.muxixyz.ccnubox.build.BC.Project
 import com.muxixyz.ccnubox.build.implementation
-import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
 
 plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-android-extensions")
     id("kotlin-kapt")
-//    id("me.2bab.bro")
 }
 
 android {
@@ -76,20 +74,12 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to arrayOf("*.jar"))))
 
-    implementation(project(Project.featureHome))
-    implementation(project(Project.featureHomeExport))
-    implementation(project(Project.featureLibrary))
-    implementation(project(Project.featureLibraryExport))
+    implementation(project(Project.featureMain))
+    implementation(project(Project.featureMainExport))
     implementation(project(Project.featureProfile))
     implementation(project(Project.featureProfileExport))
-    implementation(project(Project.featureSchedule))
-    implementation(project(Project.featureScheduleExport))
-    implementation(project(Project.featureTimetable))
-    implementation(project(Project.featureTimetableExport))
-    implementation(project(Project.featureCCNUToolbox))
-    implementation(project(Project.featureCCNUToolboxExport))
-    implementation(project(Project.featureUniToolbox))
-    implementation(project(Project.featureUniToolboxExport))
+    implementation(project(Project.featureToolbox))
+    implementation(project(Project.featureToolboxExport))
 
     implementation(project(Project.featureUIKit))
     implementation(project(Project.featureIOKit))

@@ -6,23 +6,11 @@ import org.gradle.api.JavaVersion
 object BC {
 
     object Project {
-        const val featureHome = ":feature-home"
-        const val featureHomeExport = ":feature-home-export"
+        const val featureMain = ":feature-main"
+        const val featureMainExport = ":feature-main-export"
 
-        const val featureLibrary = ":feature-library"
-        const val featureLibraryExport = ":feature-library-export"
-
-        const val featureSchedule = ":feature-schedule"
-        const val featureScheduleExport = ":feature-schedule-export"
-
-        const val featureTimetable = ":feature-timetable"
-        const val featureTimetableExport = ":feature-timetable-export"
-
-        const val featureCCNUToolbox = ":feature-ccnutoolbox"
-        const val featureCCNUToolboxExport = ":feature-ccnutoolbox-export"
-
-        const val featureUniToolbox = ":feature-unitoolbox"
-        const val featureUniToolboxExport = ":feature-unitoolbox"
+        const val featureToolbox = ":feature-toolbox"
+        const val featureToolboxExport = ":feature-toolbox-export"
 
         const val featureProfile = ":feature-profile"
         const val featureProfileExport = ":feature-profile-export"
